@@ -7,7 +7,7 @@ import threading
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = secrets.token_hex(16)
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading', ping_timeout=10, ping_interval=5)
 
 rooms = {}
 room_timers = {}
@@ -171,4 +171,6 @@ def handle_disconnect():
                     print(f"Stanza {room_code} vuota. Sarà eliminata tra 20 minuti.")
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True, host='0.0.0.0', port=5000)
+    import os
+    port = int(os.environ.get('PORT', 5000))
+    socketio.run(app, debug=False, host='0.0.0.0', port=port)
