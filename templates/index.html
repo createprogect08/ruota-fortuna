@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruota della Fortuna</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="home-screen" class="screen active">
+        <div class="title-container">
+            <h1 class="game-title">RUOTA DELLA FORTUNA</h1>
+        </div>
+        <div class="button-container">
+            <button class="btn-main" id="btn-create">CREA</button>
+            <button class="btn-main" id="btn-join">ENTRA</button>
+        </div>
+    </div>
+
+    <div id="create-screen" class="screen">
+        <div class="form-container">
+            <h2>CREA STANZA</h2>
+            <label>Il tuo nickname:</label>
+            <input type="text" id="create-nickname" placeholder="Inserisci nickname" />
+            <label>Voci della ruota (una per riga):</label>
+            <textarea id="voci-input" rows="6" placeholder="Birra&#10;Pizza&#10;Shot&#10;Ballo"></textarea>
+            <label>Punizioni (una per riga):</label>
+            <textarea id="punizioni-input" rows="6" placeholder="Bevi tutto&#10;Canta una canzone&#10;Fai 10 flessioni&#10;Racconta una storia"></textarea>
+            <button class="btn-confirm" id="btn-confirm-create">CONFERMA</button>
+            <button class="btn-back" id="btn-back-create">INDIETRO</button>
+        </div>
+    </div>
+
+    <div id="join-screen" class="screen">
+        <div class="form-container">
+            <h2>ENTRA IN STANZA</h2>
+            <label>Il tuo nickname:</label>
+            <input type="text" id="join-nickname" placeholder="Inserisci nickname" />
+            <label>Codice stanza (6 cifre):</label>
+            <input type="text" id="room-code-input" placeholder="123456" maxlength="6" />
+            <button class="btn-confirm" id="btn-confirm-join">ENTRA</button>
+            <button class="btn-back" id="btn-back-join">INDIETRO</button>
+        </div>
+    </div>
+
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <div class="room-code-display">CODICE: <span id="room-code-display"></span></div>
+            <div class="turn-display">TURNO: <span id="turn-display"></span></div>
+        </div>
+        
+        <div class="game-content">
+            <div class="wheel-container">
+                <div class="wheel-pointer"></div>
+                <canvas id="wheel-canvas" width="400" height="400"></canvas>
+                <button class="btn-spin" id="btn-spin">GIRA!</button>
+            </div>
+            
+            <div class="result-container" id="result-container">
+                <div class="result-voce">
+                    <h3>VOCE ESTRATTA</h3>
+                    <p id="voce-result"></p>
+                </div>
+                <div class="result-punizione">
+                    <h3>PUNIZIONE</h3>
+                    <p id="punizione-result"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="users-panel">
+            <h3>GIOCATORI</h3>
+            <div id="users-list"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

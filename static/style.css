@@ -1,0 +1,330 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial Black', 'Arial Bold', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.screen {
+    display: none;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.screen.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-container {
+    margin-bottom: 50px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.game-title {
+    font-size: 4rem;
+    color: #fff;
+    text-shadow: 5px 5px 0 #ff006e, 10px 10px 0 #ffbe0b, 15px 15px 0 #06ffa5;
+    letter-spacing: 5px;
+    text-align: center;
+}
+
+.button-container {
+    display: flex;
+    gap: 40px;
+}
+
+.btn-main {
+    font-size: 3rem;
+    padding: 30px 80px;
+    background: linear-gradient(45deg, #ff006e, #fb5607);
+    color: white;
+    border: 5px solid #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s;
+}
+
+.btn-main:hover {
+    transform: translateY(-10px) scale(1.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+}
+
+.form-container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 600px;
+}
+
+.form-container h2 {
+    font-size: 2.5rem;
+    color: #667eea;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 0 #ff006e;
+}
+
+.form-container label {
+    display: block;
+    font-size: 1.2rem;
+    color: #333;
+    margin: 15px 0 5px;
+    font-weight: bold;
+}
+
+.form-container input,
+.form-container textarea {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+    border: 3px solid #667eea;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-family: Arial, sans-serif;
+}
+
+.form-container textarea {
+    resize: vertical;
+}
+
+.btn-confirm {
+    width: 100%;
+    padding: 20px;
+    font-size: 1.8rem;
+    background: linear-gradient(45deg, #06ffa5, #00d4ff);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s;
+}
+
+.btn-confirm:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+.btn-back {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    background: #ff006e;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s;
+}
+
+.btn-back:hover {
+    background: #d10057;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px 40px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.room-code-display,
+.turn-display {
+    font-size: 1.5rem;
+    color: #667eea;
+    font-weight: bold;
+}
+
+.room-code-display span,
+.turn-display span {
+    color: #ff006e;
+    font-size: 2rem;
+}
+
+.game-content {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.wheel-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wheel-pointer {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-top: 40px solid #ff006e;
+    z-index: 10;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.5));
+}
+
+#wheel-canvas {
+    border-radius: 50%;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+    background: white;
+}
+
+.btn-spin {
+    margin-top: 30px;
+    padding: 25px 60px;
+    font-size: 2rem;
+    background: linear-gradient(45deg, #ffbe0b, #ff006e);
+    color: white;
+    border: 5px solid white;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s;
+}
+
+.btn-spin:hover:not(:disabled) {
+    transform: scale(1.1);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+}
+
+.btn-spin:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.result-container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.result-voce,
+.result-punizione {
+    text-align: center;
+}
+
+.result-voce h3,
+.result-punizione h3 {
+    font-size: 1.5rem;
+    color: #667eea;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 0 #06ffa5;
+}
+
+.result-voce p,
+.result-punizione p {
+    font-size: 1.8rem;
+    color: #ff006e;
+    font-weight: bold;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.users-panel {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-width: 250px;
+}
+
+.users-panel h3 {
+    font-size: 1.5rem;
+    color: #667eea;
+    margin-bottom: 15px;
+    text-align: center;
+    text-shadow: 1px 1px 0 #ff006e;
+}
+
+#users-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user-item {
+    padding: 10px 15px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.user-item.active-turn {
+    background: linear-gradient(45deg, #ffbe0b, #ff006e);
+    animation: blink 1s ease-in-out infinite;
+    transform: scale(1.1);
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 2rem;
+    }
+    
+    .btn-main {
+        font-size: 2rem;
+        padding: 20px 40px;
+    }
+    
+    .users-panel {
+        position: static;
+        transform: none;
+        margin-top: 20px;
+        max-width: 100%;
+    }
+}
